@@ -1,0 +1,80 @@
+# Swift
+# Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+xccheckout
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Build Files
+DerivedData/
+.build/
+
+# OS X temporary files
+.DS_Store
+.Trashes
+*.swp
+*.lock
+
+# Xcode temporary files
+*~.nib
+
+# Xcode build files
+build/
+
+# Xcode private settings
+*.xcuserstate
+
+# Xcode 4 - semi-personal settings
+*.xccheckout
+
+# Xcode 4 workspaces
+*.moved-aside
+
+# Optional: Some well-known tools
+# Uncomment these if you use them
+# !Podfile.lock
+# !Gemfile.lock
+# .idea/workspace.xml
+# tm_build_errors
+
+# Unknown: recommended by others
+
+# React
+node_modules/
+build/
+coverage/
+.DS_Store
+.env
+
+# Three.js
+node_modules/
+build/
+coverage/
+.DS_Store
+.env
+
+# Pygame
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+
+# libGDX
+bin/
+gen/
+*.iml
+*.ipr
+*.iws
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
