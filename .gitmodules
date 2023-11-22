@@ -3,8 +3,8 @@
   url = https://github.com/atarnowsky/go-assets.git
 
 [submodule "Comparative/euler"]
-  path = Comparative/euler
-  url = https://gitlab.computing.dcu.ie/powers52/euler
+	path = Comparative/euler
+	url = https://gitlab.computing.dcu.ie/powers52/euler
 
 [submodule "2024-ca326-fbumbu-educlass"]
 	path = 2024-ca326-fbumbu-educlass
