@@ -138,6 +138,5 @@ main = do
   putStrLn "\nDoes the tree contain 8?"
   print (contains tree'' 8)
 
-  let tree = fromList [3, 10, 6, 15, 20, 18] :: Tree Int
   putStrLn "Initial tree:"
   printTree tree
