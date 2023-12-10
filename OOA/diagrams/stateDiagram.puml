@@ -1,0 +1,65 @@
+@startuml StateDiagram
+/'
+A software system has been developed to support the operations of a specialised
+car-hire company. One software class within the system is called Reservation and
+the lifecycle of a Reservation object is described as follows:
+    “When a Member reserves a CarModel over the Internet, the Reservation is initially
+Waiting to be processed by an Assistant (this is so the Customer can make a
+Reservation without the intervention of an Assistant). The Reservation becomes
+Notifiable if, some time later, an Assistant finds a suitable unreserved Car in the
+display area of the car park, or if one is returned by a Customer. In this case, the Car
+is moved to the reserved area.
+
+    If no car becomes available for a particular Reservation within a week, the
+Reservation becomes NeedingRenewal: the Member must be contacted, by phone
+or in person, so that they can cancel the Reservation, or ask for it to be renewed for
+another week. If the Member cancels or can’t be contacted within five days, the
+Reservation is concluded.
+
+    Once a Reservation is Notifiable, the Member must be notified by an Assistant, in
+person or by phone, within three days; if the Customer can be reached, the
+Reservation is Collectable otherwise it becomes Displayable (a Car that was moved
+to the reserved area must be returned to the display area).
+
+    Once a Reservation is Collectable, the Member must collect the Car within three
+days; if they do collect, the Reservation is Concluded; otherwise, the Reservation
+becomes Displayable.
+
+    Once a Displayable reservation’s Car has been put back in the display area, the
+Reservation is Concluded.
+
+    At any time, the Member may cancel the Reservation over the Internet, by phone or
+in person.” 
+'/
+
+/'
+- Reservation Request;
+    - Reservation Accepted;
+    - Reservation Cancelled;
+    - Reservation Concluded;
+    - Collectable;
+    - Displayable;
+'/
+
+Customer: Customer is yet to make a request
+Waiting: Customer has made a Reservation Request
+Cancel: Customer has Cancelled the Reservation
+Notifiable: There is an available car for the Customer
+AssistantReview: Review the requested car from customer
+Collectable: The request is accepted by both the customer and the assistant
+Displayable: The car is returned to the display area
+Concluded: The reservation is concluded
+
+Customer --> Waiting: Entered the queue
+Waiting --> Notifiable: Waiting for a car to be available
+Notifiable --> AssistantReview: Car is available
+AssistantReview --> Collectable: The request is accepted by the assistant
+Collectable --> Customer: The customer can collect the car
+Collectable --> Displayable : If customer doesnt respond
+Displayable --> Concluded : The reservation is no longer available for customer
+Cancel --> Displayable: Car is now available for other customers
+Customer --> Displayable : If the customer has finnished the reservation
+Customer --> Cancel: The customer no longer wishes to reserve this car
+
+
+@enduml

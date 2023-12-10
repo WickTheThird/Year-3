@@ -1,0 +1,128 @@
+@startuml ClassDiagram
+
+/'
+A software system has been developed to support the operations of a specialised
+car-hire company. One software class within the system is called Reservation and
+the lifecycle of a Reservation object is described as follows:
+    “When a Member reserves a CarModel over the Internet, the Reservation is initially
+Waiting to be processed by an Assistant (this is so the Customer can make a
+Reservation without the intervention of an Assistant). The Reservation becomes
+Notifiable if, some time later, an Assistant finds a suitable unreserved Car in the
+display area of the car park, or if one is returned by a Customer. In this case, the Car
+is moved to the reserved area.
+
+    If no car becomes available for a particular Reservation within a week, the
+Reservation becomes NeedingRenewal: the Member must be contacted, by phone
+or in person, so that they can cancel the Reservation, or ask for it to be renewed for
+another week. If the Member cancels or can’t be contacted within five days, the
+Reservation is concluded.
+
+    Once a Reservation is Notifiable, the Member must be notified by an Assistant, in
+person or by phone, within three days; if the Customer can be reached, the
+Reservation is Collectable otherwise it becomes Displayable (a Car that was moved
+to the reserved area must be returned to the display area).
+
+    Once a Reservation is Collectable, the Member must collect the Car within three
+days; if they do collect, the Reservation is Concluded; otherwise, the Reservation
+becomes Displayable.
+
+    Once a Displayable reservation’s Car has been put back in the display area, the
+Reservation is Concluded.
+
+    At any time, the Member may cancel the Reservation over the Internet, by phone or
+in person.” 
+
+    Create a Class Diagram for the above
+'/
+/'
+We have the following classes:
+    Reservation
+        -> Waiting
+        -> Concluded
+        -> NeedingRenewal
+        -> Notifiable
+    Customer
+    Assistant
+    Car
+'/
+
+class Reservation {
+    - car: Car();
+    - customer: Customer();
+
+    + Reservation(customer: Customer): void;
+
+    + setCar(car: Car): void;
+
+    # waiting(customer: Customer) : string;
+    # concluded(car: Car, customer: Customer): string;
+    # needingRenewal(customer: Customer): bool;
+    # notifiable(customer: Customer, car: Car): Map();
+    # cancelReservation(customer: Customer, car: Car): void;
+}
+
+class Customer {
+    - id: string;
+    - rentedCars: Map<Car, bool>();
+    - reservation: Reservation(this: Customer);
+    - renew: boolean;
+    - state: string;
+    - timer: float;
+
+    + setRentedCars(car: string): void;
+    + getRentedCars(): Array();
+
+    + setState(state: string): void;
+    + getState(): string;
+
+    + getTimer(): float;
+
+    # viewAvailable(cars: Array): void;
+    # sendAcceptedCar(car: Car): Map<Car, bool>();
+
+    # renewApplication(): void;
+    # cancelApplication(): void;
+}
+
+class Assistant {
+    - id: string;
+    - customer: Customer();
+    - cars: Array();
+    - clientState: customer.getState();
+
+    # setCustomerState(state: string): void;
+    # getAvailableCars(): void;
+    # notifyCustomer(customer: Customer, cars: Array): void;
+
+}
+
+class Cars {
+    - allCars: Array();
+    - availableCars: Array<Car>();
+    - car: Car();
+
+    + setAvailableCars(car: Car): void;
+    + getAvailableCars(): Array<Car>;
+}
+
+class Car {
+    - id: string;
+    - model: string;
+    - year: number;
+    - color: string;
+    - price: number;
+    - available: boolean;
+
+    + setAvailable(available: boolean): void;
+    + getAvailable(): boolean;
+}
+
+Reservation "1" -- "1" Customer : <<composition>>
+Reservation "1" -- "1" Assistant : <<association>>
+Reservation "1" -- "1" Cars : <<association>>
+Customer "1" -- "1" Assistant : <<association>>
+Customer "1" -- "*" Car : <<association>>
+Assistant "1" -- "*" Car : <<association>>
+Cars "1" -- "1" Car : <<aggregation>>
+
+@enduml

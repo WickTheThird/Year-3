@@ -1,3 +1,5 @@
+import * as THREE from "../node_modules/three/build/three.module.js";
+
 let scene, camera, renderer;
 const tileSize = 1;
 const board = [];

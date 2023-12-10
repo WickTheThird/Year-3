@@ -101,8 +101,8 @@ fromList :: (Ord t) => [t] -> Tree t
 fromList = foldl insert EmptyTree
 
 
-printTree :: (Show a) => Tree a -> IO ()
-printTree tree = putStr (formatTree 0 tree)
+prettyPrint :: (Show a) => Tree a -> IO ()
+prettyPrint tree = putStr (formatTree 0 tree)
   where
     formatTree :: (Show a) => Int -> Tree a -> String
     formatTree _ EmptyTree = ""
@@ -139,4 +139,4 @@ main = do
   print (contains tree'' 8)
 
   putStrLn "Initial tree:"
-  printTree tree
+  prettyPrint tree

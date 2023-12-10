@@ -1,0 +1,69 @@
+@startuml UseCaseDiagram
+
+/'
+A software system has been developed to support the operations of a specialised
+car-hire company. One software class within the system is called Reservation and
+the lifecycle of a Reservation object is described as follows:
+    “When a Member reserves a CarModel over the Internet, the Reservation is initially
+Waiting to be processed by an Assistant (this is so the Customer can make a
+Reservation without the intervention of an Assistant). The Reservation becomes
+Notifiable if, some time later, an Assistant finds a suitable unreserved Car in the
+display area of the car park, or if one is returned by a Customer. In this case, the Car
+is moved to the reserved area.
+
+    If no car becomes available for a particular Reservation within a week, the
+Reservation becomes NeedingRenewal: the Member must be contacted, by phone
+or in person, so that they can cancel the Reservation, or ask for it to be renewed for
+another week. If the Member cancels or can’t be contacted within five days, the
+Reservation is concluded.
+
+    Once a Reservation is Notifiable, the Member must be notified by an Assistant, in
+person or by phone, within three days; if the Customer can be reached, the
+Reservation is Collectable otherwise it becomes Displayable (a Car that was moved
+to the reserved area must be returned to the display area).
+
+    Once a Reservation is Collectable, the Member must collect the Car within three
+days; if they do collect, the Reservation is Concluded; otherwise, the Reservation
+becomes Displayable.
+
+    Once a Displayable reservation’s Car has been put back in the display area, the
+Reservation is Concluded.
+
+    At any time, the Member may cancel the Reservation over the Internet, by phone or
+in person.” 
+'/
+
+actor "Customer" as ac1
+actor "Customer2" as ac2
+
+rectangle Reservation {
+    actor "Assistant" as aa1
+
+    usecase "Send Notifications" as UC0
+    usecase "Request Reservation" as UC1
+    usecase "Notify the Customer that there is a Car Available" as UC2
+    usecase "Car can be collected" as UC3
+    usecase "Review the request" as UC4
+    usecase "Car now can be displayed" as UC4
+    usecase "Cancel the reservation" as UC5
+    usecase "Reservation is now concluded" as UC6
+}
+
+ac1 --> UC1
+UC0 --> ac1
+
+UC1 --> UC2
+UC2 --> UC0
+UC2 .> aa1 : includes
+aa1 --> UC4
+aa1 --> UC3
+UC3 --> UC0
+
+UC4 --> UC6
+ac1 --> UC3
+
+ac2 -->UC5
+UC5 --> UC6
+UC6 --> UC0
+
+@enduml

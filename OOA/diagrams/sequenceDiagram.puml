@@ -1,0 +1,89 @@
+@startuml
+
+/'
+A software system has been developed to support the operations of a specialised
+car-hire company. One software class within the system is called Reservation and
+the lifecycle of a Reservation object is described as follows:
+    “When a Member reserves a CarModel over the Internet, the Reservation is initially
+Waiting to be processed by an Assistant (this is so the Customer can make a
+Reservation without the intervention of an Assistant). The Reservation becomes
+Notifiable if, some time later, an Assistant finds a suitable unreserved Car in the
+display area of the car park, or if one is returned by a Customer. In this case, the Car
+is moved to the reserved area.
+
+    If no car becomes available for a particular Reservation within a week, the
+Reservation becomes NeedingRenewal: the Member must be contacted, by phone
+or in person, so that they can cancel the Reservation, or ask for it to be renewed for
+another week. If the Member cancels or can’t be contacted within five days, the
+Reservation is concluded.
+
+    Once a Reservation is Notifiable, the Member must be notified by an Assistant, in
+person or by phone, within three days; if the Customer can be reached, the
+Reservation is Collectable otherwise it becomes Displayable (a Car that was moved
+to the reserved area must be returned to the display area).
+
+    Once a Reservation is Collectable, the Member must collect the Car within three
+days; if they do collect, the Reservation is Concluded; otherwise, the Reservation
+becomes Displayable.
+
+    Once a Displayable reservation’s Car has been put back in the display area, the
+Reservation is Concluded.
+
+    At any time, the Member may cancel the Reservation over the Internet, by phone or
+in person.” 
+'/
+
+/'
+    
+We have the following actors/objects:
+    - Waiting;
+    - Notifiable;
+    - NeedingRenewal;
+    - Concluded;
+    - Collectable;
+    - Displayable;
+    - Car;
+    - Assisstant;
+    - Customer;
+
+We have the following Lifetimes:
+    - Reservation Request;
+    - Reservation Accepted;
+    - Reservation Cancelled;
+    - Reservation Concluded;
+    - Collectable;
+    - Displayable;
+
+'/
+
+participant Customer order 10
+participant Waiting order 20
+participant Notifiable order 30
+participant NeedingRenewal order 40
+participant Assistant order 50
+participant Collectable order 60
+participant CollectCar order 70
+participant Displayable order 90
+participant Concluded order 90
+
+participant Participant [
+    =Reservation
+    ---
+    ""Practice""
+]
+
+Participant -> Customer
+
+Customer -> Waiting : Reservation Request
+Waiting -> Notifiable : Available Car
+Waiting -> NeedingRenewal : After 1 week
+NeedingRenewal -> Customer :  Ask Customer to renew request
+Notifiable -> Assistant : Review Request once Car is available
+Assistant -> Collectable : Request Accepted/Reviewed
+Collectable -> Customer : Car is available
+Collectable -> Displayable : 3 days
+Displayable -> Concluded : Customer cannot be reached
+Customer -> CollectCar :  3 days 
+CollectCar -> Concluded : Reservation done after reservation period
+
+@enduml
