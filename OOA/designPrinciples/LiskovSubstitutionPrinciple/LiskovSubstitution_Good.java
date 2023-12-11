@@ -13,6 +13,9 @@ package LiskovSubstitutionPrinciple;
  * This is because the when replacing the superclass with the subclass, the subclass might not work, while the superclass might. And this
  * is inconsitency.
  * 
+ * In Object-Oriented Analysis (OOA), invariants are used to describe the constraints and rules that must always hold true for an object or class. 
+ * They are a key part of defining the behavior of objects and are used to ensure the integrity of the object's data representation
+ * 
  * Same goes the other way around.
  * We are not allowed to weaken preconditions.
  * 
