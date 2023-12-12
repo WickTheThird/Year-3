@@ -1,7 +1,6 @@
 
-
 {-
-This will be a file containing all the theoreticall knowledge about haskell.
+This will be a file containing all the basic theoretical knowledge about haskell (at least that i deem important).
 We shall have a separate file that will go through some of the labs we did throughout the semester to revise these topics.
 
 We have the following to cover:
@@ -12,11 +11,10 @@ We have the following to cover:
         ii. comprehensions [X]
     - Tuples [X]
     - Type Classes [X]
-    - Pattern Matching and Recursion [ ]
-    - Guards [ ]
-    - Higher Order Functions [ ]
-    - Lambda Functions [ ]
-    - I.O and file IO [ ]
+    - Pattern Matching and Recursion [X]
+    - Guards [X]
+    - Higher Order Functions [X]
+    - Lambda Functions [X]
 -}
 
 
@@ -127,6 +125,84 @@ typeClasses = do
     putStrLn "We can also use the :t command in haskell to determine the type of a function or item."
     putStrLn ":t head returns head::[a]->a"
     putStrLn ":t (==) returns (==)::(Eq a) => a -> a -> Bool"
+
+
+patternMatchingAndRecursion :: IO()
+patternMatchingAndRecursion = do
+    putStrLn "Pattern matching and recursion is very common programming construct in functional programming."
+    putStrLn "Recursion is where a function continuously calls itself when performing an evaulation. If not handled correctly, it can lead into an infinite loop."
+    putStrLn "To prevent an infinite liip, a recursive function must have a basecase, and the parameters of each invocation of the recursive function should move closer to the base case."
+    putStrLn "\n"
+    putStrLn "Example of recursive function:"
+    putStrLn "factorial :: Int -> Int"
+    putStrLn "factorial 0 = 1"
+    putStrLn "factorial n = n * factorial (n-1)"
+    putStrLn "\n"
+    putStrLn "Example of pattern matching:"
+    putStrLn "listLength :: (Integral b) => [a] -> b"
+    putStrLn "listLength [] = 0"
+    putStrLn "listLength (_:xs) = 1 + listLength xs"
+    putStrLn "\n"
+    putStrLn "--Some notes on the above example--"
+    putStrLn "\n"
+    putStrLn "The base case is the empty list"
+    putStrLn "If tge list we are measuring is not empty, we try the next pattern _:xs: "
+    putStrLn "--> the list is matched against _:xs, which is a list with something at its head followed by a tail."
+    putStrLn "--> the something ( _ ) doesn't matter to us, but the tail does."
+    putStrLn "It is very important to make sure that the pattern you specify matches against all possible patterns."
+    putStrLn "\n"
+    putStrLn "\n"
+    putStrLn "To refer to the original complete item and not just the elements of the pattern, we can use 'as patterns'."
+    putStrLn "An as pattern consists of the name of the complete item followed by an @ and then the patern."
+    putStrLn "For example, we can rewrite the above example as:"
+    putStrLn "listLength :: (Integral b) => [a] -> b"
+    putStrLn "listLength [] = 0"
+    putStrLn "listLength all@(x:xs) = 1 + listLength xs"
+    putStrLn "\n"
+
+
+guards :: IO ()
+guards = do
+    putStrLn "Guards are a way of testing whether some property of a value (or several values) are true or false."
+    putStrLn "Guards follow a function name and parameters. They are boolean expressions that follow a pipe (|)."
+    putStrLn "When a guard evaluates to true, the function body is evaluated. If it evaluates to false, the next guard is evaluated."
+    putStrLn "'otherwise' is a boolean expression that always evaluates to true and is used as the last guard."
+
+
+higherOrderFunctions :: IO ()
+higherOrderFunctions = do
+    putStrLn "Higher order functions in Haskell are functions that can take other functions as arguments or return functions as their results."
+    putStrLn "This concept is a fundamental part of functional programming, as it allowed for powerful abstractions and code reuse."
+    putStrLn "\n"
+    putStrLn "Haskell functions (by default) take only one parameter due to a concpet called currying."
+    putStrLn "This means that functions take one argument at a time and retyrn a function that takes the next argument until all arguments are provided."
+    putStrLn "This is why function type signatures in Haskell have the structure a->a->b->c and not a, a, b->c"
+    putStrLn "\n"
+    putStrLn "Curried functions are useful because when you supply a curried function with a fewer parameters than required, you get back a partially applied function."
+    putStrLn "This is like a new function that can be used as a parameter in another function."
+    putStrLn "\n"
+    putStrLn "Example of a curried function:"
+    putStrLn "Consider the max funtion in Haskell. Its type signature is max :: (Ord a) => a -> a -> a."
+    putStrLn "When you call max 4 5, it creates a new function that takes one parameter and evaluates to 4 if the new parameter is less tham 4 or the new parameter if it is greater than 4"
+    putStrLn "\n"
+    putStrLn "Example of a higher order functions can be: map, filter and takeWhile."
+    putStrLn "The map function applies a given function to every element of a list."
+    putStrLn "The filter function takes a preducate and a list and returns a list of the elements of the original list that satisfies the predicate."
+    putStrLn "The takeWhile removes elements from the start of a list while a predicate is true."
+    putStrLn "\n"
+    putStrLn "map (>3) [1, 8, 2, 4] evaluates to [False, True, False, True] because it applies the function '>3' to every eleent in the list."
+    putStrLn "filter (>3) [1, 8, 2, 4] evaluates  to [8, 4], because it also applies the function '>3' to every element in the list."
+    putStrLn "etc."
+
+lambdaFunctions :: IO ()
+lambdaFunctions = do
+    putStrLn "These are anonymous functions that are mainly used as a parameter to a higher order funtion."
+    putStrLn "They allow you to define functions without giving them a name. This is usefull for when you want to use a function once and never use it again afterwards."
+    putStrLn "As all functions in haskell they are curried by default."
+    putStrLn "\n"
+    putStrLn "Example of a lambda function:"
+    putStrLn "map (\\x -> x + 3) [1, 2, 3, 4] evaluates to [4, 5, 6, 7]"
+
 
 main :: IO ()
 main = do
